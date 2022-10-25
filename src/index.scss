@@ -18,27 +18,51 @@
         font-size: 24px;
     }
 
-    .add {
-      width: 205px;
-      margin: 11px 0;
+    .adding {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
-      cursor: pointer;
-      -webkit-transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
-      transition: all 0.3s ease;
 
-      p {
+      input {
+        width: 200px;
+        height: 20px;
+        margin-right: 20px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #f25551;
+        outline:none;
+        color: #FFFFFF;
         font-size: 16px;
-        color: #f25551;
       }
-    }
 
-    .add:hover {
-      background: #462730;
-      border-radius: 25px;
+      input::-webkit-input-placeholder {
+        color: #FFFFFF;
+       } 
+       input::-moz-placeholder {
+        color: #FFFFFF;
+       }
+
+      .add {
+        width: 205px;
+        margin: 11px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        cursor: pointer;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+  
+        p {
+          font-size: 16px;
+          color: #f25551;
+        }
+      }
+  
+      .add:hover {
+        background: #462730;
+        border-radius: 25px;
+      }
     }
   }
 
@@ -73,23 +97,25 @@
         background-color: #462730;
         display: flex;
         align-items: center;
+        cursor: pointer;
 
         img {
             width: 0px;
-            height: 32px;
+            height: 24px;
             transition: width 0.5s;
-            padding-left: 3px;
+            padding-left: 6px;
+            cursor: pointer;
         }
 
         div {
-            width: 5px;
+            width: 7px;
             height: 60px;
             background-color: #462730;
         }
     }
 
     .delete:hover img {
-        width: 32px;
+        width: 22px;
     }
 
     .block {
@@ -104,4 +130,16 @@
         padding-left: 10px;
     }
 
+    img {
+      cursor: pointer;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+    }
+
+    img:hover {
+      background: #462730;
+      border-radius: 50%;
+    }
 }
