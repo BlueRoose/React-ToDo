@@ -1,0 +1,107 @@
+.header {
+    width: 1214px;
+    margin-left: auto;
+    margin-right: auto;
+  header {
+    align-items: center;
+    width: 1214px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 75px;
+    color: #ffffff;
+    font-family: "Poppins";
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .add {
+      width: 205px;
+      margin: 11px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      cursor: pointer;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+
+      p {
+        font-size: 16px;
+        color: #f25551;
+      }
+    }
+
+    .add:hover {
+      background: #462730;
+      border-radius: 25px;
+    }
+  }
+
+  hr {
+    color: #352432;
+    background-color: #352432;
+    border: none;
+    height: 4px;
+    margin-bottom: 50px
+  }
+}
+
+.working {
+    .logo {
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+       padding-top: 140px;
+    }
+}
+
+.thing {
+    width: 1214px;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .delete {
+        background-color: #462730;
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 0px;
+            height: 32px;
+            transition: width 0.5s;
+            padding-left: 3px;
+        }
+
+        div {
+            width: 5px;
+            height: 60px;
+            background-color: #462730;
+        }
+    }
+
+    .delete:hover img {
+        width: 32px;
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+    }
+
+    p {
+        font-size: 16px;
+        color: #FFFFFF;
+
+        padding-left: 10px;
+    }
+
+}
