@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from "../../index.scss";
 
-function Header({ updateData }) {
+function Header({ toDo, updateData }) {
   const [input, setInput] = React.useState("");
 
   const handleClear = (e) => {
     e.preventDefault();
     setInput("");
-    updateData({title: input, checked: false,});
+    toDo.some(obj => obj.title === input) ? alert("План с таким названием уже существует, повторите ввод!") : updateData({title: input, checked: false,});
   };
 
   const handleChange = (e) => {

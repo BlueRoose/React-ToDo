@@ -6,17 +6,32 @@ import "./index.scss"
 import axios from "axios";
 
 function App() {
-  const [toDo, setToDo] = React.useState({});
+  const [toDo, setToDo] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const updateData = (value) => {
-    setToDo(value)
+    try {
+    axios.post("https://6357d29bc26aac906f33694a.mockapi.io/todo", value);
+    setToDo((prev) => [...prev, value]);
+    } catch (error) {
+      alert("Something went wrong!");
+      console.log(error);
+    }
+  }
+
+  const deleteThing = (title) => {
+    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/todo/${title}`);
+    setToDo((prev) =>
+      prev.filter((item) => item.title !== title)
+    );
   }
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const toDoResponce = await axios.get("https://632b4caf1aabd8373983f5fc.mockapi.io/cart");
-        setToDo(toDoResponce);
+        const toDoResponce = await axios.get("https://6357d29bc26aac906f33694a.mockapi.io/todo");
+        setIsLoading(false);
+        setToDo(toDoResponce.data);
       } catch (error) {
         alert("Ошибка при запросе данных :(");
         console.error(error);
@@ -27,9 +42,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header updateData={updateData}/>
-      {/* <WorkingPlace list={list}/> */}
-      <Thing/>  
+      <Header toDo={toDo} updateData={updateData}/>
+      <WorkingPlace toDo={toDo} isLoading={isLoading} deleteThing={deleteThing}/>
     </div>
   );
 }
