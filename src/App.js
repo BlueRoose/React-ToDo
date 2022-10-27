@@ -8,10 +8,11 @@ import axios from "axios";
 function App() {
   const [toDo, setToDo] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [checkedToDo, setCheckedToDo] = React.useState([]);
 
   const updateData = (value) => {
     try {
-    axios.post("https://6357d29bc26aac906f33694a.mockapi.io/todo", value);
+    axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDo", value);
     setToDo((prev) => [...prev, value]);
     } catch (error) {
       alert("Something went wrong!");
@@ -19,19 +20,24 @@ function App() {
     }
   }
 
-  const deleteThing = (title) => {
-    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/todo/${title}`);
+  const deleteThing = (id) => {
+    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/toDo/${id}`);
     setToDo((prev) =>
-      prev.filter((item) => item.title !== title)
+      prev.filter((item) => Number(item.id) !== Number(id))
     );
   }
 
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const toDoResponce = await axios.get("https://6357d29bc26aac906f33694a.mockapi.io/todo");
+        const [toDoResponce, checkedResponce] =
+          await Promise.all([
+            axios.get("https://6357d29bc26aac906f33694a.mockapi.io/toDo"),
+            axios.get("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked"),
+          ]);
         setIsLoading(false);
         setToDo(toDoResponce.data);
+        setIsChecked(checkedResponce);
       } catch (error) {
         alert("Ошибка при запросе данных :(");
         console.error(error);
@@ -43,7 +49,7 @@ function App() {
   return (
     <div className="App">
       <Header toDo={toDo} updateData={updateData}/>
-      <WorkingPlace toDo={toDo} isLoading={isLoading} deleteThing={deleteThing}/>
+      <WorkingPlace toDo={toDo} isLoading={isLoading} deleteThing={deleteThing} isChecked={isChecked}/>
     </div>
   );
 }

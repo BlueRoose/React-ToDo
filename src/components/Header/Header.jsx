@@ -7,7 +7,7 @@ function Header({ toDo, updateData }) {
   const handleClear = (e) => {
     e.preventDefault();
     setInput("");
-    toDo.some(obj => obj.title === input) ? alert("План с таким названием уже существует, повторите ввод!") : updateData({title: input, checked: false,});
+    toDo.some(obj => obj.title === input) ? alert("План с таким названием уже существует, повторите ввод!") : updateData({title: input});
   };
 
   const handleChange = (e) => {

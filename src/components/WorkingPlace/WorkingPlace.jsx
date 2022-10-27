@@ -1,14 +1,16 @@
 import LoadingThing from "../LoadingThing/LoadingThing";
 import Thing from "../Thing/Thing";
 
-function WorkingPlace({ toDo, isLoading, deleteThing }) {
+function WorkingPlace({ toDo, isLoading, deleteThing, isChecked }) {
 
   const renderItems = () => {
     return toDo.map((item, index) => (
       <Thing
         key={index}
+        id={item.id}
         title={item.title}
         deleteThing={deleteThing}
+        isChecked={isChecked}
       />
     ));
   };

@@ -123,6 +123,11 @@
     .block {
         display: flex;
         align-items: center;
+
+        .checkbox {
+          cursor: pointer;
+          margin-left: 10px;
+        }
     }
 
     p {
@@ -132,7 +137,7 @@
         padding-left: 10px;
     }
 
-    img {
+    .edit {
       cursor: pointer;
       -webkit-transition: all 0.3s ease;
       -moz-transition: all 0.3s ease;
@@ -140,7 +145,7 @@
       transition: all 0.3s ease;
     }
 
-    img:hover {
+    .edit:hover {
       background: #462730;
       border-radius: 50%;
     }
