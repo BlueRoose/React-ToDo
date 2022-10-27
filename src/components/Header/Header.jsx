@@ -1,7 +1,11 @@
 import React from 'react';
+import AppContext from '../../context';
 import styles from "../../index.scss";
 
-function Header({ toDo, updateData }) {
+function Header({updateData}) {
+
+  const {toDo} = React.useContext(AppContext);
+
   const [input, setInput] = React.useState("");
 
   const handleClear = (e) => {

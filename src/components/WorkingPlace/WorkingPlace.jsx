@@ -1,7 +1,11 @@
+import React from 'react'
+import AppContext from '../../context';
 import LoadingThing from "../LoadingThing/LoadingThing";
 import Thing from "../Thing/Thing";
 
-function WorkingPlace({ toDo, isLoading, deleteThing, isChecked }) {
+function WorkingPlace() {
+
+  const {toDo, isLoading, deleteThing, onCheck, isToDoChecked} = React.useContext(AppContext);
 
   const renderItems = () => {
     return toDo.map((item, index) => (
@@ -10,7 +14,8 @@ function WorkingPlace({ toDo, isLoading, deleteThing, isChecked }) {
         id={item.id}
         title={item.title}
         deleteThing={deleteThing}
-        isChecked={isChecked}
+        onCheck={(obj) => onCheck(obj)}
+        isToDoChecked={isToDoChecked}
       />
     ));
   };

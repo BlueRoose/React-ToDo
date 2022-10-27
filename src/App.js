@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "./components/Header/Header"
-import Thing from "./components/Thing/Thing";
 import WorkingPlace from "./components/WorkingPlace/WorkingPlace";
 import "./index.scss"
 import axios from "axios";
+import AppContext from "./context";
 
 function App() {
   const [toDo, setToDo] = React.useState([]);
@@ -27,6 +27,25 @@ function App() {
     );
   }
 
+  const onCheck = (obj) => {
+    console.log(obj);
+    if (checkedToDo.find((item) => Number(item.id) === Number(obj.id))) {
+      axios.delete(
+        `https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${obj.id}`
+      );
+      setCheckedToDo((prev) =>
+        prev.filter((item) => Number(item.id) !== Number(obj.id))
+      );
+    } else {
+      axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked", obj);
+      setCheckedToDo((prev) => [...prev, obj]);
+    }
+  };
+
+  const isToDoChecked = (id) => {
+    return checkedToDo.some((obj) => Number(obj.id) === Number(id));
+  };
+
   React.useEffect(() => {
     async function fetchData() {
       try {
@@ -37,7 +56,9 @@ function App() {
           ]);
         setIsLoading(false);
         setToDo(toDoResponce.data);
-        setIsChecked(checkedResponce);
+        setCheckedToDo(checkedResponce.data);
+        console.log(toDoResponce.data)
+        console.log(checkedResponce.data);  
       } catch (error) {
         alert("Ошибка при запросе данных :(");
         console.error(error);
@@ -47,10 +68,20 @@ function App() {
   }, []);
 
   return (
+    <AppContext.Provider value={{
+      toDo,
+      updateData,
+      isLoading,
+      deleteThing,
+      checkedToDo,
+      onCheck,
+      isToDoChecked,
+    }}>
     <div className="App">
-      <Header toDo={toDo} updateData={updateData}/>
-      <WorkingPlace toDo={toDo} isLoading={isLoading} deleteThing={deleteThing} isChecked={isChecked}/>
+      <Header/>
+      <WorkingPlace updateData={updateData}/>
     </div>
+    </AppContext.Provider>
   );
 }
 

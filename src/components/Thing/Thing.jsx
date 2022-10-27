@@ -1,11 +1,14 @@
 import React from 'react'
+import AppContext from '../../context';
 
-function Thing({id, title, checked, deleteThing, isChecked}) {
+function Thing() {
 
-    const [onCheck, setOnCheck] = React.useState(false);
+    const {id, title, deleteThing, onCheck, isToDoChecked} = React.useContext(AppContext);
 
-    const changeCheckBox = () => {
-        onCheck = !onCheck;
+    const obj = {id, title};
+
+    const onClickCheck = () => {
+        onCheck(obj);
     }
 
     return (
@@ -15,7 +18,7 @@ function Thing({id, title, checked, deleteThing, isChecked}) {
                     <img src="res/trash.svg" alt="delete" onClick={() => deleteThing(id)}/>
                     <div></div>
                 </div>
-                {isChecked ? <img onClick={changeCheckBox} className="checkbox" src="res/checkbox0.svg" alt="checkbox"/> : <img onClick={changeCheckBox} className="checkbox" src="res/checkbox1.svg" alt="checkbox"/>}
+                <img src={isToDoChecked(id) ? "res/checkbox1.svg" : "res/checkbox0.svg"} onClick={onClickCheck} className="checkbox" alt="checkbox"/>
                 <p>{title}</p>
             </div>
             <img className="edit" src="res/arrow.svg" width={32} height={32} alt="arrow"/>
