@@ -9,11 +9,12 @@ function App() {
   const [toDo, setToDo] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [checkedToDo, setCheckedToDo] = React.useState([]);
+  const [isUpdated, setIsUpdated] = React.useState(false);
 
-  const updateData = (value) => {
+  async function updateData(value) {
     try {
-    axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDo", value);
-    setToDo((prev) => [...prev, value]);
+      await axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDo", value);
+      setToDo((prev) => [...prev, value]);
     } catch (error) {
       alert("Something went wrong!");
       console.log(error);
@@ -22,23 +23,29 @@ function App() {
 
   const deleteThing = (id) => {
     axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/toDo/${id}`);
+    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${id}`);
     setToDo((prev) =>
       prev.filter((item) => Number(item.id) !== Number(id))
     );
   }
 
-  const onCheck = (obj) => {
-    console.log(obj);
-    if (checkedToDo.find((item) => Number(item.id) === Number(obj.id))) {
+  const onCheck = async (obj) => {
+    try {
+      if (checkedToDo.find((item) => Number(item.id) === Number(obj.id))) {
       axios.delete(
-        `https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${obj.id}`
+        `https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${Number(obj.id)}`
       );
       setCheckedToDo((prev) =>
         prev.filter((item) => Number(item.id) !== Number(obj.id))
       );
     } else {
-      axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked", obj);
-      setCheckedToDo((prev) => [...prev, obj]);
+      const { data } = await axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked", obj);
+      console.log(data);
+      setCheckedToDo((prev) => [...prev, data]);
+    }
+    } catch (error) {
+      alert("Error!");
+      console.log(error);
     }
   };
 
@@ -57,8 +64,6 @@ function App() {
         setIsLoading(false);
         setToDo(toDoResponce.data);
         setCheckedToDo(checkedResponce.data);
-        console.log(toDoResponce.data)
-        console.log(checkedResponce.data);  
       } catch (error) {
         alert("Ошибка при запросе данных :(");
         console.error(error);
@@ -78,7 +83,7 @@ function App() {
       isToDoChecked,
     }}>
     <div className="App">
-      <Header/>
+      <Header updateData={updateData}/>
       <WorkingPlace updateData={updateData}/>
     </div>
     </AppContext.Provider>

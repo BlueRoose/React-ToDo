@@ -13,9 +13,9 @@ function WorkingPlace() {
         key={index}
         id={item.id}
         title={item.title}
-        deleteThing={deleteThing}
+        deleteThing={(id) => deleteThing(id)}
         onCheck={(obj) => onCheck(obj)}
-        isToDoChecked={isToDoChecked}
+        isToDoChecked={isToDoChecked(item && item.id)}
       />
     ));
   };
