@@ -3,7 +3,7 @@ import AppContext from '../../context';
 
 function Thing({id, title, deleteThing, onCheck, isToDoChecked}) {
 
-    const obj = {id, title};
+    const obj = {title};
 
     const [isChecked, setIsChecked] = React.useState(isToDoChecked);
 
@@ -16,7 +16,7 @@ function Thing({id, title, deleteThing, onCheck, isToDoChecked}) {
         <div className="thing">
             <div className="block">
                 <div className="delete">
-                    <img src="res/trash.svg" alt="delete" onClick={() => deleteThing(id)}/>
+                    <img src="res/trash.svg" alt="delete" onClick={() => deleteThing(title)}/>
                     <div></div>
                 </div>
                 <img src={isChecked ? "res/checkbox1.svg" : "res/checkbox0.svg"} onClick={onClickCheck} className="checkbox" alt="checkbox"/>

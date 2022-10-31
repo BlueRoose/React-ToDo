@@ -7,13 +7,12 @@ import AppContext from "./context";
 
 function App() {
   const [toDo, setToDo] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [checkedToDo, setCheckedToDo] = React.useState([]);
   const [isUpdated, setIsUpdated] = React.useState(false);
 
-  async function updateData(value) {
+  function updateData(value) {
     try {
-      await axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDo", value);
       setToDo((prev) => [...prev, value]);
     } catch (error) {
       alert("Something went wrong!");
@@ -21,27 +20,20 @@ function App() {
     }
   }
 
-  const deleteThing = (id) => {
-    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/toDo/${id}`);
-    axios.delete(`https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${id}`);
+  const deleteThing = (title) => {
     setToDo((prev) =>
-      prev.filter((item) => Number(item.id) !== Number(id))
+      prev.filter((item) => item.title !== title)
     );
   }
 
-  const onCheck = async (obj) => {
+  const onCheck = (obj) => {
     try {
       if (checkedToDo.find((item) => Number(item.id) === Number(obj.id))) {
-      axios.delete(
-        `https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked/${Number(obj.id)}`
-      );
       setCheckedToDo((prev) =>
         prev.filter((item) => Number(item.id) !== Number(obj.id))
       );
     } else {
-      const { data } = await axios.post("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked", obj);
-      console.log(data);
-      setCheckedToDo((prev) => [...prev, data]);
+      setCheckedToDo((prev) => [...prev, obj]);
     }
     } catch (error) {
       alert("Error!");
@@ -52,25 +44,6 @@ function App() {
   const isToDoChecked = (id) => {
     return checkedToDo.some((obj) => Number(obj.id) === Number(id));
   };
-
-  React.useEffect(() => {
-    async function fetchData() {
-      try {
-        const [toDoResponce, checkedResponce] =
-          await Promise.all([
-            axios.get("https://6357d29bc26aac906f33694a.mockapi.io/toDo"),
-            axios.get("https://6357d29bc26aac906f33694a.mockapi.io/toDoChecked"),
-          ]);
-        setIsLoading(false);
-        setToDo(toDoResponce.data);
-        setCheckedToDo(checkedResponce.data);
-      } catch (error) {
-        alert("Ошибка при запросе данных :(");
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
 
   return (
     <AppContext.Provider value={{
